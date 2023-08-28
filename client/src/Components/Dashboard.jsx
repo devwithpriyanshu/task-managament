@@ -49,10 +49,8 @@ export default function Dashboard() {
 
       // Update the tasks array with the edited task
       setTasks((prevTasks) =>
-        prevTasks.map((task) =>
-          task.id === editingTask.id ? { ...task, title: editedTitle, description: editedDescription } : task
+        prevTasks[editingTask.id-1] = { title: editedTitle, description: editedDescription }
         )
-      );
 
       // Close the edit modal
       handleEditModalClose();
@@ -88,7 +86,8 @@ export default function Dashboard() {
           title:newTask.title, 
           description:newTask.description
         }]);
-        
+        setTitle('');
+        setDescription('')
       }
   }
   async function handleDelete(id){
@@ -158,7 +157,7 @@ useEffect(() => {
                 <p><strong>Title: {task.title}</strong></p>
                 <p>Description: {task.description}</p>
                 <button onClick={()=> handleEditModalOpen(task)}>Edit</button>
-                <button  onClick={()=>handleDelete(index+1)}> Delete</button>
+                <button  onClick={()=>handleDelete(task.id)}> Delete</button>
                 
             </div>
 
