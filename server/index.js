@@ -6,7 +6,7 @@ const connectDB = require('./db/connect');
 require('dotenv').config();
 var jwt = require("jsonwebtoken");
 const JWT_SECRET = "secret";
-const { auth } = require("./middleware");
+const { } = require("./middleware");
 const bodyParser = require("body-parser");
 var jsonParser = bodyParser.json();
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
@@ -91,7 +91,7 @@ app.post('/login', async(req,res) => {
   return res.json({ token: token });
 });
 
-app.post("/addtask",auth,async (req,res) => {
+app.post("/addtask",async (req,res) => {
     try 
     {
   
@@ -106,7 +106,7 @@ app.post("/addtask",auth,async (req,res) => {
     }
 });
 
-app.get("/tasks",auth, async (req, res) => {
+app.get("/tasks", async (req, res) => {
     taskModel.find({})
     .then((tasks)=>{
           res.json({tasks})
@@ -119,7 +119,7 @@ app.get("/tasks",auth, async (req, res) => {
     
   })
 
-app.get('/tasks/:id',auth, async (req,res) =>{
+app.get('/tasks/:id', async (req,res) =>{
 
   taskModel.find({ id: req.params.id })
       .then((task) =>{
@@ -132,7 +132,7 @@ app.get('/tasks/:id',auth, async (req,res) =>{
     })
   });
 
-app.put('/tasks/:id',auth, async (req, res) => {
+app.put('/tasks/:id', async (req, res) => {
   const taskId = req.params.id; // Get the task ID from the URL parameter
   const { title, description } = req.body; // Destructure title and description from the request body
   
@@ -153,7 +153,7 @@ app.put('/tasks/:id',auth, async (req, res) => {
     res.status(500).json({ message: 'Error updating task', error: error.message });
   }
 });
-app.delete("/tasks/:id",auth,(req,res) =>{
+app.delete("/tasks/:id",(req,res) =>{
 
   const taskId = req.params.id;
   
