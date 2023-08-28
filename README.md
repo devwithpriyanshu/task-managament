@@ -5,7 +5,7 @@ A brief description of what this project does and who it's for
 
 ## Tech Stack
 
-**Client:** React, Redux, TailwindCSS
+**Client:** React
 
 **Server:** Node, Express, Mongoose
 
