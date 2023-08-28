@@ -151,6 +151,7 @@ useEffect(() => {
         
         
         {/* Task List */}
+        {tasks.length>0 ?( 
         <div className="task-list">Task List
           {tasks.map((task,index)=>(
             <div key={index}>
@@ -163,6 +164,10 @@ useEffect(() => {
 
           ))}
         </div>
+        ):(
+          <p>No Tasks Available</p>
+        )
+        }
 
         {/* Edit Task Modal */}
       {editingTask && (
