@@ -2,6 +2,10 @@ import React,{useState} from 'react'
 import { backendUrl } from '../constants/backendUrl';
 import { useNavigate } from 'react-router-dom';
 
+/**
+ * The above function is a React component for a sign-up form that sends user data to a backend server
+ * for registration.
+ */
 export default function SignUp() {
 
   const [email, setEmail] = useState("");

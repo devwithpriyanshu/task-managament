@@ -3,6 +3,10 @@ import Dashboard from './Components/Dashboard';
 import Login from './Components/Login';
 import SignUp from './Components/SignUp';
 import { BrowserRouter , Routes , Route } from "react-router-dom";
+/**
+ * The App function returns a set of routes for different paths, including a signup page, login page,
+ * dashboard page, and a 404 page.
+ */
 
 function App() {
   return (

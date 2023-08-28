@@ -6,7 +6,6 @@ const connectDB = require('./db/connect');
 require('dotenv').config();
 var jwt = require("jsonwebtoken");
 const JWT_SECRET = "secret";
-const { } = require("./middleware");
 const bodyParser = require("body-parser");
 var jsonParser = bodyParser.json();
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
@@ -42,6 +41,10 @@ app.get('/',(req,res) =>{
     })
 })
 
+/**
+ * The function generates a new ID for a task by finding the highest existing ID and incrementing it by
+ * 1, or starting with ID 1 if no tasks exist yet.
+ */
 const generateNewId = async () => {
     const highestIdTask = await taskModel.findOne().sort({id:-1}) 
     if (highestIdTask) {
@@ -50,6 +53,12 @@ const generateNewId = async () => {
       return 1; // If no tasks exist yet, start with ID 1
     }
 };
+
+
+/* The code `app.post('/signup', async(req,res)=>{...})` is defining a route for user signup. When a
+POST request is made to "/signup", the code checks if the email provided in the request body already
+exists in the database by using the `userModel.findOne` method. If an existing user is found, it
+throws an error with the message "Email already exists". */
 app.post('/signup', async(req,res)=>{
   try{
     const existingUser = await userModel.findOne({email:req.body.email});
@@ -68,6 +77,10 @@ app.post('/signup', async(req,res)=>{
       res.json({ status: 'error', error})
     }
 })
+
+/* The code `app.post('/login', async(req,res) => {...})` is defining a route for user login. When a
+POST request is made to "/login", the code retrieves the email and password from the request body.
+It then uses the `userModel` to find a user with the specified email in the database. */
 
 app.post('/login', async(req,res) => {
   const email = req.body.email;
@@ -91,6 +104,13 @@ app.post('/login', async(req,res) => {
   return res.json({ token: token });
 });
 
+/* The code `app.post("/addtask",async (req,res) => {...})` is defining a route for adding a new task
+to the database. When a POST request is made to "/addtask", the code generates a new ID for the task
+using the `generateNewId` function. It then creates a new task document using the `taskModel.create`
+method, with the ID and other data from the request body. If the task is successfully created, it
+sends a response with a status code of 201 and a JSON object containing a success message and the
+created task document.  */
+
 app.post("/addtask",async (req,res) => {
     try 
     {
@@ -106,6 +126,11 @@ app.post("/addtask",async (req,res) => {
     }
 });
 
+
+/* The code `app.get("/tasks", async (req, res) => {...})` is defining a route for retrieving all
+tasks. When a GET request is made to "/tasks", the code uses the taskModel to find all tasks in the
+database. */
+
 app.get("/tasks", async (req, res) => {
     taskModel.find({})
     .then((tasks)=>{
@@ -119,6 +144,13 @@ app.get("/tasks", async (req, res) => {
     
   })
 
+
+
+/* This code defines a route for retrieving a task with a specific ID. When a GET request is made to
+'/tasks/:id', the code uses the taskModel to find a task with the specified ID in the request
+parameters (req.params.id).*/
+
+
 app.get('/tasks/:id', async (req,res) =>{
 
   taskModel.find({ id: req.params.id })
@@ -131,6 +163,11 @@ app.get('/tasks/:id', async (req,res) =>{
       console.error(err);
     })
   });
+
+
+
+/* The code `app.put('/tasks/:id', async (req, res) => {...})` is defining a route for updating a task
+with a specific ID. */
 
 app.put('/tasks/:id', async (req, res) => {
   const taskId = req.params.id; // Get the task ID from the URL parameter
@@ -153,6 +190,12 @@ app.put('/tasks/:id', async (req, res) => {
     res.status(500).json({ message: 'Error updating task', error: error.message });
   }
 });
+
+
+/* The code `app.delete("/tasks/:id",(req,res) =>{...})` is defining a route for deleting a task with a
+specific ID. */
+
+
 app.delete("/tasks/:id",(req,res) =>{
 
   const taskId = req.params.id;

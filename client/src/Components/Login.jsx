@@ -3,6 +3,11 @@ import { backendUrl } from '../constants/backendUrl';
 import { useNavigate } from 'react-router-dom';
 import {Link} from 'react-router-dom';
 
+/**
+ * The Login function is a React component that handles user login by sending a POST request to a
+ * backend server with the user's email and password, and then storing the received token in local
+ * storage if the login is successful.
+ */
 export default function Login() {
 
   const [email, setEmail] = useState("");
